@@ -6,10 +6,29 @@ button:active, button:focus{
   outline: none;
 }
 
-.red{
-  color: red;
+.App button{
+  background-color: peru;
+  border: 1px solid grey;
+  padding: 15px;
+  cursor: pointer;
+  color: white;
+  border-radius: 3px;
+  font-size: 16px;
 }
 
-.bold{
+.App button:hover{
+  background-color: antiquewhite;
+  color: black;
+}
+
+.App button.red{
+  background-color: red;
+}
+
+.App button.red:hover{
+  background-color: brown;
+}
+
+.App button.bold{
   font-weight: bold;
 }
