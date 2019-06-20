@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';  // If I use Pure componennt I don't have to use shouldAnyComponentUpdate method and check all the condition below I did before PureComponent took care of it by default
 import Person from './Person/Person';
 
-class Persons extends Component {
+class Persons extends PureComponent {
 
     // static getDerivedStateFromProps(props, state){
     //     console.log("[Persons.js] getDerivedStateFromProps"); //1
     //     return state;
     // }
 
-    shouldComponentUpdate(nextProps, nextState){
-        console.log("[Persons.js] shouldComponentUpdate"); //2
-        if(nextProps.persons !== this.props.persons){
-            return true;
-        } else{
-            return false;
-        }   
-    }
+    // shouldComponentUpdate(nextProps, nextState){
+    //     console.log("[Persons.js] shouldComponentUpdate"); //2
+    //     if(nextProps.persons !== this.props.persons ||
+    //        nextProps.person !== this.person.clicked ||
+    //        nextProps.person !== this.person.changed){
+    //         return true;
+    //     } else{
+    //         return false;
+    //     }   
+    // }
 
     getSnapshotBeforeUpdate(prevProp, prevState){
         console.log("[Persons.js] getSnapshotBeforeUpdate"); //3
