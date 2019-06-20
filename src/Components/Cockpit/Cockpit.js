@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import StyleClasses from './Cockpit.css';
 
-const cockpit = ( props ) => {
+const Cockpit = ( props ) => {
+
+    // useEffect( () => {
+    //     console.log("[Cockpit.js] useEffect");
+    //     // Http Request ....
+    //     setTimeout( ()  => {
+    //         console.log("You made change in person component!")
+    //     }, 1000);
+    // }, [props.persons]); // does reload whenever user made change in person component
+
+    useEffect( () => {
+        console.log("[Cockpit.js] useEffect");
+        // Http Request ....
+        // const timer = setTimeout( ()  => {
+        setTimeout( ()  => {
+            console.log("Save data in cloud");
+        }, 1000);
+        return () => {
+            // clearTimeout(timer);
+            console.log("[Cockpit.js] cleanup work in useEffect");
+        };
+    }, []); // Does not reload evertime you render page because of empty array 
+
+    useEffect( () => {
+        console.log("[Cockpit.js] 2nd useEffect")
+        return () => {
+            console.log("[Cockpit.js] cleanup work in 2nd useEffect");
+        }
+    })
+
 
     const classes = [];
     let btnClass = "";
@@ -32,4 +61,4 @@ const cockpit = ( props ) => {
 };
 
 
-export default cockpit;
+export default Cockpit;

@@ -5,13 +5,44 @@ import Persons from '../Components/Persons/Persons';
 import Cockpit from '../Components/Cockpit/Cockpit';
 
 class App extends Component {
+
+  // Component crete life cycle steps
+
+  constructor(props){  //1 
+    super(props);
+    console.log("[App.js] constructor");
+  }
   state = {
     persons: [
       {id: 'p1', name: 'Zakwan', age: 25},
       {id: 'p2', name: 'Shehjad', age: 26},
       {id: 'p3', name: 'Yahya', age: 27}
     ],
-    showPersons: false
+    showPersons: false,
+    showCockpit : true
+  }
+
+  static getDerivedStateFromProps(props, state){
+        console.log({state: props.appTitle}); //2
+        return state;
+    }
+
+  // componentWillMount(){
+  //   console.log("[App.js] componentWillMount"); // 2
+  // }
+
+  componentDidMount(){
+    console.log("[App.js] componentDidMount"); // 3
+  }
+
+  // Update componnent hooks
+  shouldComponentUpdate(nextProp, nextState){
+    console.log("[App.js] shouldComponentUpdate");
+    return true;
+  }
+
+  componentDidUpdate(){
+    console.log("[App.js] componentDidUpdate");
   }
 
   nameChangeHandler = (event, id) =>{
@@ -44,6 +75,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("[App.js] renderingg..... ") // 3
 
     let persons = null;
     if(this.state.showPersons){
@@ -58,13 +90,17 @@ class App extends Component {
 
     return (
       <div className={StyleClasses.App}>
-
-       <Cockpit 
+        <button onClick = {() => 
+          {
+            this.setState({showCockpit: false});
+          }
+        }> Remove Cockpit </button>
+       { this.state.showCockpit ? <Cockpit 
         title = {this.props.appTitle}
         toggle = {this.togglePersonHandler} 
         showPersons = {this.state.showPersons}
         persons = {this.state.persons}
-        />
+        /> : null }
        {persons}
 
       </div>
