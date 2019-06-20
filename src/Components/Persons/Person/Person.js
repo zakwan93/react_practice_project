@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
-import StyleClasses from  './Person.css'
+// import React, { Component, Fragment } from 'react';
+// import StyleClasses from  './Person.css';
+import Aux from '../../../hoc/Aux';
 
 class Person extends Component {
     render(){
         return (
-            <div className={StyleClasses.Person}  >
+            <Aux>
                 <p onClick={this.props.click}> I'm {this.props.name}! and I'm {this.props.age} years old. </p>
                 <p> {this.props.children} </p>
                 <input type = "text" onChange={this.props.changed} value={this.props.name} />
-            </div>
+            </Aux>
+
+            // 2 way wrap around Aux and use as manny html element I want
+
+            // <Fragment>
+            //     <p onClick={this.props.click}> I'm {this.props.name}! and I'm {this.props.age} years old. </p>
+            //     <p> {this.props.children} </p>
+            //     <input type = "text" onChange={this.props.changed} value={this.props.name} />
+            // </Fragment>
+
+            // 2 end
+
+            /* <div className={StyleClasses.Person}  >
+                <p onClick={this.props.click}> I'm {this.props.name}! and I'm {this.props.age} years old. </p>
+                <p> {this.props.children} </p>
+                <input type = "text" onChange={this.props.changed} value={this.props.name} />
+            </div> */
         );  
     }      
 }

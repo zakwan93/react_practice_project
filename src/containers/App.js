@@ -3,6 +3,7 @@ import StyleClasses from './App.css';
 // import Person from '../Components/Persons/Person/Person';
 import Persons from '../Components/Persons/Persons';
 import Cockpit from '../Components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
 class App extends Component {
 
@@ -89,22 +90,23 @@ class App extends Component {
     }
 
     return (
-      <div className={StyleClasses.App}>
-        <button onClick = {() => 
-          {
-            this.setState({showCockpit: false});
-          }
-        }> Remove Cockpit </button>
-       { this.state.showCockpit ? 
-       <Cockpit 
-        title = {this.props.appTitle}
-        toggle = {this.togglePersonHandler} 
-        showPersons = {this.state.showPersons}
-        personsLength = {this.state.persons.length}
-        /> : null }
-       {persons}
-
-      </div>
+      <WithClass classes = {StyleClasses.App} >
+        {/* <div className={StyleClasses.App}> */}
+          <button onClick = {() => 
+            {
+                this.setState({showCockpit: false});
+              }
+            }> Remove Cockpit </button>
+          { this.state.showCockpit ? 
+          <Cockpit 
+            title = {this.props.appTitle}
+            toggle = {this.togglePersonHandler} 
+          showPersons = {this.state.showPersons}
+          personsLength = {this.state.persons.length}
+          /> : null }
+          {persons}
+        {/* </div> */}
+      </WithClass> 
     );
     // return React.createElement('div',{className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
