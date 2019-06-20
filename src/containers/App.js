@@ -3,7 +3,8 @@ import StyleClasses from './App.css';
 // import Person from '../Components/Persons/Person/Person';
 import Persons from '../Components/Persons/Persons';
 import Cockpit from '../Components/Cockpit/Cockpit';
-import WithClass from '../hoc/WithClass';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Aux';
 
 class App extends Component {
 
@@ -20,7 +21,8 @@ class App extends Component {
       {id: 'p3', name: 'Yahya', age: 27}
     ],
     showPersons: false,
-    showCockpit : true
+    showCockpit : true,
+    changeCounter: 0
   }
 
   static getDerivedStateFromProps(props, state){
@@ -61,7 +63,14 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({ persons: persons })
+    this.setState((prevState, props) => {
+      return{
+        persons: persons ,
+        changeCounter: prevState.changeCounter + 1
+      };
+    }); 
+
+    // this.setState({ persons: persons })
   }
 
   togglePersonHandler = () => {
@@ -90,26 +99,29 @@ class App extends Component {
     }
 
     return (
-      <WithClass classes = {StyleClasses.App} >
-        {/* <div className={StyleClasses.App}> */}
-          <button onClick = {() => 
+      // <WithClass classes = {StyleClasses.App} >
+        // {/* <div className={StyleClasses.App}> */}
+        <Aux>
+            <button onClick = {() => 
             {
                 this.setState({showCockpit: false});
               }
             }> Remove Cockpit </button>
-          { this.state.showCockpit ? 
-          <Cockpit 
-            title = {this.props.appTitle}
-            toggle = {this.togglePersonHandler} 
-          showPersons = {this.state.showPersons}
-          personsLength = {this.state.persons.length}
-          /> : null }
-          {persons}
-        {/* </div> */}
-      </WithClass> 
+            { this.state.showCockpit ? 
+            <Cockpit 
+              title = {this.props.appTitle}
+              toggle = {this.togglePersonHandler} 
+            showPersons = {this.state.showPersons}
+            personsLength = {this.state.persons.length}
+            /> : null }
+            {persons}
+        </Aux>
+          
+        // {/* </div> */}
+      // </WithClass> 
     );
     // return React.createElement('div',{className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default App;
+export default withClass(App,StyleClasses.App);
