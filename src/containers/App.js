@@ -5,6 +5,7 @@ import Persons from '../Components/Persons/Persons';
 import Cockpit from '../Components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Aux';
+import AuthContex from '../contex/auth-contex';
 
 class App extends Component {
 
@@ -22,7 +23,8 @@ class App extends Component {
     ],
     showPersons: false,
     showCockpit : true,
-    changeCounter: 0
+    changeCounter: 0,
+    authanticated: false
   }
 
   static getDerivedStateFromProps(props, state){
@@ -75,7 +77,11 @@ class App extends Component {
 
   togglePersonHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({showPersons: !doesShow})
+    this.setState({showPersons: !doesShow});
+  }
+ 
+  loginHandler = () => {
+    this.setState({authanticated: true});
   }
 
   deletePersonHandler = (personIndex) =>{
@@ -94,6 +100,7 @@ class App extends Component {
             persons = {this.state.persons}
             clicked = {this.deletePersonHandler}
             changed = {this.nameChangeHandler}
+            isAuthanticated= {this.state.authanticated}
           />
         );
     }
@@ -107,14 +114,23 @@ class App extends Component {
                 this.setState({showCockpit: false});
               }
             }> Remove Cockpit </button>
-            { this.state.showCockpit ? 
-            <Cockpit 
-              title = {this.props.appTitle}
-              toggle = {this.togglePersonHandler} 
-            showPersons = {this.state.showPersons}
-            personsLength = {this.state.persons.length}
-            /> : null }
-            {persons}
+            <AuthContex.Provider 
+              value={{
+                authanticated : this.state.authanticated, 
+                login: this.loginHandler
+              }}>
+
+                { this.state.showCockpit ? 
+                <Cockpit 
+                  title = {this.props.appTitle}
+                  toggle = {this.togglePersonHandler} 
+                  showPersons = {this.state.showPersons}
+                  personsLength = {this.state.persons.length}
+                  // login = {this.loginHandler}
+                /> : null }
+                {persons}
+
+            </AuthContex.Provider>  
         </Aux>
           
         // {/* </div> */}

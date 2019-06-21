@@ -4,14 +4,44 @@ import PropTypes from 'prop-types';
 import Aux from '../../../hoc/Aux';
 import withClass from '../../../hoc/withClass';
 import StyleClasses from  './Person.css';
+import AuthContext from '../../../contex/auth-contex';
 
 class Person extends Component {
+
+    // CreateRef only work in class based components 
+    constructor(props){
+        super(props);
+        this.inputElementRef = React.createRef();
+    }
+
+    static contextType = AuthContext;
+
+    componentDidMount(){
+        // this.inputElement.focus();
+        this.inputElementRef.current.focus();
+        console.log(this.context.authanticated);
+    }
+
     render(){
         return (
             <Aux>
-                <p onClick={this.props.click}> I'm {this.props.name}! and I'm {this.props.age} years old. </p>
+                {/* <AuthContext.Consumer>
+                    {(context) => context.authanticated ? <p>Authanticated</p> : <p>Please log in </p>}
+                </AuthContext.Consumer> */}
+                
+                {this.context.authanticated ? <p>Authanticated</p> : <p>Please log in </p>}
+            
+                <p onClick={this.props.click}> 
+                    I'm {this.props.name}! 
+                    and I'm {this.props.age} years old. 
+                </p>
                 <p> {this.props.children} </p>
-                <input type = "text" onChange={this.props.changed} value={this.props.name} />
+                <input
+                    // ref = {(inputEl) => {this.inputElement = inputEl}}
+                    ref = {this.inputElementRef} 
+                    type = "text" 
+                    onChange={this.props.changed} 
+                    value={this.props.name} />
             </Aux>
 
             // 2 way wrap around Aux and use as manny html element I want

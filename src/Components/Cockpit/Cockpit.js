@@ -1,7 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import StyleClasses from './Cockpit.css';
+import AuthContext from '../../contex/auth-contex';
 
 const Cockpit = ( props ) => {
+
+    // Functional component use useRef hook from react not createRef
+    const toggleBtnRef = useRef();
+    const authContex = useContext(AuthContext);
+
+    console.log(authContex.authanticated);
 
     // useEffect( () => {
     //     console.log("[Cockpit.js] useEffect");
@@ -15,9 +22,10 @@ const Cockpit = ( props ) => {
         console.log("[Cockpit.js] useEffect");
         // Http Request ....
         // const timer = setTimeout( ()  => {
-        setTimeout( ()  => {
-            console.log("Save data in cloud");
-        }, 1000);
+        // setTimeout( ()  => {
+        //     console.log("Save data in cloud");
+        // }, 1000);
+        toggleBtnRef.current.click();
         return () => {
             // clearTimeout(timer);
             console.log("[Cockpit.js] cleanup work in useEffect");
@@ -51,10 +59,15 @@ const Cockpit = ( props ) => {
             <h1> {props.title} </h1>
             <p className= {classes.join(" ")} > React is fun </p>
             <button 
+                ref = {toggleBtnRef}
                 className = {btnClass}
                 // style = {buttonStyle}
                 onClick = {props.toggle}> Toggle Persons 
             </button>
+            {/* <AuthContext.Consumer>
+                { context =>  <button onClick = {context.login}>Log In</button> }
+            </AuthContext.Consumer> */}
+            <button onClick = {authContex.login}>Log In</button>
             
         </div>
     );
